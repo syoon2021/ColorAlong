@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Welcome to ColorAlong</h1>
+
+    <h4>
+        Learn color theory, explore with interactive tools, and test your knowledge!
+    </h4>
+
+    <img class="item_img" 
+            src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/blogs/2147738206/images/36f37de-e28-4862-1e88-5638e1c8816_Colour_Wheel_of_Tinted_Colors.png" 
+            alt="Color Wheel" 
+            width="20%" >
+
+    <div>
+
+        <a href="/lesson" class="btn btn-primary">
+            Start Learning
+        </a>
+        <p class="mb-3 text-muted">
+            Learn the basics of color theory step-by-step
+        </p>
+
+        <a href="/color_picker" class="btn btn-success">
+            Color Picker
+        </a>
+        <p class="mb-3 text-muted">
+            Explore color theory with interactive tools
+        </p>
+
+        <a href="/quiz" class="btn btn-warning">
+            Take Quiz
+        </a>
+        <p class="mb-3 text-muted">
+            Test your knowledge on color theory
+        </p>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='website.js') }}"></script>
+
+{% endblock %}
