@@ -4,9 +4,75 @@
 
 
 <div class="container">
-    <h1>Lesson</h1>
+<h1>{{ lesson.title }}</h1>
+
+{% for section in lesson.sections %}
+
+  {% if section.type == "text" %}
+    <p>{{ section.content }}</p>
+
+  {% elif section.type == "image" %}
+    {% set img = section %}
+      <img src="{% if img.src.startswith('http') %}
+                  {{ img.src }}
+                {% else %}
+                  {{ url_for('static', filename=img.src) }}
+                {% endif %}"
+        alt="{{ img.alt }}"
+        class="img-fluid {{ img.class if img.class else '' }}">
+
+    {% elif section.type == "subsections" %}
+
+    {% if section.get("image") %}
+      {% set img = section["image"] %}
+        <img src="{% if img.src.startswith('http') %}
+                    {{ img.src }}
+                  {% else %}
+                    {{ url_for('static', filename=img.src) }}
+                  {% endif %}"
+        alt="{{ img.alt }}"
+        class="img-fluid {{ img.class if img.class else '' }}">
+    {% endif %}
+
+    {% for item in section["items"] %}
+      <div class="mb-3">
+
+        {% if item.get("header") %}
+          <h5>{{ item["header"] }}</h5>
+        {% endif %}
+
+        {% if item.get("text") %}
+          <p>{{ item["text"] }}</p>
+        {% endif %}
+
+      </div>
+    {% endfor %}
+
+  {% endif %}
+
+{% endfor %}
+
+<div class="d-flex justify-content-between mt-4">
+
+  {% if prev_lesson %}
+    <a href="/lesson/{{ prev_lesson }}" class="btn btn-secondary">
+      Previous
+    </a>
+  {% else %}
+    <div></div>
+  {% endif %}
+
+  <a href="{{ next_link }}" class="btn btn-primary">
+    {% if is_last %}
+      Go to Color Picker
+    {% else %}
+      Next
+    {% endif %}
+  </a>
+
 </div>
 
+</div>
 
 <script src="{{url_for('static', filename='website.js')}}"></script>
 

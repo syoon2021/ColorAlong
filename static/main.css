@@ -1,0 +1,11 @@
+.img-small {
+  max-width: 20%;
+}
+
+.img-medium {
+  max-width: 35%;
+}
+
+.img-large {
+  max-width: 60%;
+}

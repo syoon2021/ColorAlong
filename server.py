@@ -2,14 +2,298 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
+lesson_info = [
+  {
+    "id": 1,
+    "title": "Color Wheel",
+    "sections": [
+      {
+        "type": "text",
+        "content": "The color wheel represents the full spectrum of colors, smoothly transitioning from one hue to another."
+      },
+      {
+        "type": "subsections",
+        "items": [
+          {
+            "header": "Primary Colors",
+            "text": "Red, Blue, and Yellow. They cannot be created by mixing other colors."
+          },
+          {
+            "header": "Secondary Colors",
+            "text": "Created by mixing two primary colors."
+          },
+          {
+            "header": "Tertiary Colors",
+            "text": "Created by mixing a primary and a secondary color. The name starts with the primary color followed by the secondary."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "https://ourhomeworkhelp.wordpress.com/wp-content/uploads/2016/07/color-wheel-chart.png",
+        "alt": "color wheel", 
+        "class": "img-big"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Color Temperatures",
+    "sections": [
+
+      {
+        "type": "subsections",
+        "image": {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Warm_and_cool_colors.svg/3840px-Warm_and_cool_colors.svg.png",
+          "alt": "warm vs cool", 
+          "class": "img-medium"
+        },
+        "items": [
+          {
+            "header": "Warm Colors",
+            "text": "On the right side of the color wheel (yellow to red-violet). They feel energetic and vibrant."
+          },
+          {
+            "header": "Cool Colors",
+            "text": "On the left side of the color wheel (violet to green). They feel calm and soothing."
+          }
+        ]
+      },
+
+      {
+        "type": "subsections",
+        "image": {
+          "src": "https://miro.medium.com/v2/resize:fit:1400/1*l-BQZnvfIPllP3Mv-iEAUQ.jpeg",
+          "alt": "bright vs muted",
+          "class": "img-medium"
+        },
+        "items": [
+          {
+            "header": "Vibrant / Bright",
+            "text": "Created by mixing adjacent primary colors from the same temperature (cool-cool or warm-warm)."
+          },
+          {
+            "header": "Muted",
+            "text": "Created by mixing opposite colors from different temperatures (cool-warm)."
+          }
+        ]
+      }
+
+    ]
+  },
+
+  {
+    "id": 3,
+    "title": "Mixing Colors",
+    "sections": [
+
+      {
+        "type": "image",
+        "src": "graphics/color wheel basic.png",
+        "alt": "color wheel mix",
+        "class": "img-medium"
+      },
+
+      {
+        "type": "image",
+        "src": "https://wileyartclass.weebly.com/uploads/2/5/8/9/25894159/785166039.png",
+        "alt": "mix colors",
+        "class": "img-medium"
+      },
+      {
+        "type": "text",
+        "content": "Colors between two hues on the color wheel are the result of mixing them. For example, yellow and blue make green, because green lies between yellow and blue.."
+      },
+
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Harmonies",
+    "sections": [
+      {
+        "type": "text",
+        "content": "Color harmonies are combinations of colors that are visually pleasing. Each follows a pattern on the color wheel."
+      },
+
+      {
+        "type": "subsections",
+        "image": {
+          "src": "graphics/analgous.png",
+          "alt": "analogous diagram",
+          "class": "img-small"
+        },
+        "items": [
+          {
+            "header": "Analogous",
+            "text": "3-4 colors next to each other, creates a harmonious, relaxing combination."
+          }
+        ]
+      },
+      {
+        "type": "subsections",
+        "image": {
+          "src": "graphics/complementary.png",
+          "alt": "complementary diagram",
+          "class": "img-small"
+        },
+        "items": [
+          {
+            "header": "Complementary",
+            "text": "Opposite colors on the wheel, creates a strong contrast and vibrant, energetic effect."
+          }
+        ]
+      },
+      {
+        "type": "subsections",
+        "image": {
+          "src": "graphics/split complementary.png",
+          "alt": "split complementary diagram",
+          "class": "img-small"
+        },
+        "items": [
+          {
+            "header": "Split Complementary",
+            "text": "A base color and 2 colors adjacent to its direct complement, creates high contrast and balanced."
+          }
+        ]
+      },
+      {
+        "type": "subsections",
+        "image": {
+          "src": "graphics/triadic.png",
+          "alt": "triadic diagram",
+          "class": "img-small"
+        },
+        "items": [
+          {
+            "header": "Triadic",
+            "text": "Three colors evenly separated, creating a vibrant effect where one color is dominant and the other two are accents."
+          }
+        ]
+      },
+      {
+        "type": "subsections",
+        "image": {
+          "src": "graphics/monochromatic.png",
+          "alt": "monochromatic diagram",
+          "class": "img-small"
+        },
+        "items": [
+          {
+            "header": "Monochromatic",
+            "text": "Colors based around a single hue with different tints and shades, creates a cohesive palette."
+          }
+        ]
+      },
+    ]
+  },
+
+  {
+    "id": 5,
+    "title": "HSL: Hue, Saturation, Lightness",
+    "sections": [
+
+      {
+        "type": "subsections",
+        "image": {
+          "src": "https://blueskygraphics.co.uk/wp-content/uploads/2025/10/Colour-Wheel.png",
+          "alt": "hsl diagram",
+          "class": "img-medium"
+        },
+        "items": [
+          {
+            "header": "Hue",
+            "text": "The base color determined by its position on the color wheel. Hue is 0 is red, at 120 is green, at 240 is blue, and then ends 360 at red again."
+          },
+          {
+            "header": "Saturation",
+            "text": "The intensity of a color. The higher the saturation, the more vivid and intense the color. The lower the saturation, the more dull gray the color."
+          },
+          {
+            "header": "Lightness",
+            "text": "How bright or dark a color is, on a scale of black(0) and white(100)."
+          }
+        ]
+      }
+
+    ]
+  },
+
+  {
+    "id": 6,
+    "title": "HSL Comparison",
+    "sections": [
+      {
+        "type": "text",
+        "content": "See how changing each value affects the color."
+      },
+
+      {
+        "type": "subsections",
+        "image": {
+          "src": "graphics/dec sat.png",
+          "alt": "decreasing saturation diagram",
+          "class": "img-medium"
+        },
+        "items": [
+          {
+            "header": "Decreasing Saturation"
+          }
+        ]
+      },
+      {
+        "type": "subsections",
+        "image": {
+          "src": "graphics/dec lightness.png",
+          "alt": "decreasing lightness diagram",
+          "class": "img-medium"
+        },
+        "items": [
+          {
+            "header": "Decreasing Lightness"
+          }
+        ]
+      },
+      {
+        "type": "subsections",
+        "image": {
+          "src": "graphics/dec hue.png",
+          "alt": "decreasing hue diagram",
+          "class": "img-medium"
+        },
+        "items": [
+          {
+            "header": "Decreasing Hue"
+          }
+        ]
+      }
+    ]
+  }
+]
 
 @app.route("/")
 def welcome():
   return render_template("homepage.html")
 
-@app.route("/lesson")
-def lesson():
-  return render_template("lesson.html")
+@app.route("/lesson/<int:lesson_id>")
+def lesson(lesson_id):
+  lesson = next((l for l in lesson_info if l["id"] == lesson_id), None)
+  previous_ids = [l["id"] for l in lesson_info if l["id"] < lesson_id]
+  next_ids = [l["id"] for l in lesson_info if l["id"] > lesson_id]
+
+  prev_lesson = max(previous_ids) if previous_ids else None
+  next_lesson = min(next_ids) if next_ids else None
+
+  next_link = f"/lesson/{next_lesson}" if next_lesson else "/color_picker"
+
+  return render_template(
+    "lesson.html",
+    lesson=lesson,
+    prev_lesson=prev_lesson,
+    next_link=next_link,
+    is_last=next_lesson is None
+  )
 
 @app.route("/color_picker")
 def color_picker():
