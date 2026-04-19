@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <h2>Question #{{ quiz.id }}</h2>
+    <hr>
+    <div class="quiz-box">
+        <h4>{{ quiz.question }}</h4>
+        </div>
+
+    <div class="mt-4">
+        <a href="{{ url_for('quiz_main') }}" class="btn btn-outline-secondary">To List of questions</a>
+        
+        {% if quiz.id < 5 %}
+            <a href="{{ url_for('question', question_num=quiz.id + 1) }}" class="btn btn-primary">Next</a>
+        {% else %}
+            <a href="/" class="btn btn-success">Finish</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

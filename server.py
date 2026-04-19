@@ -299,9 +299,25 @@ def lesson(lesson_id):
 def color_picker():
   return render_template("color_picker.html")
 
+quiz_data = [
+    {"id": 1, "question": "What are the primary colors?"},
+    {"id": 2, "question": "Which color is a warm color?"},
+    {"id": 3, "question": "How do you make Green?"},
+    {"id": 4, "question": "What is Complementary harmony?"},
+    {"id": 5, "question": "What does Saturation mean?"}
+]#Temp for testing
+
 @app.route("/quiz")
-def quiz():
-  return render_template("quiz.html")
+def quiz_main():
+  return render_template("quiz.html", quizzes=quiz_data)
+
+@app.route('/quiz/<int:question_num>')
+def question(question_num):
+    quiz = next((q for q in quiz_data if q["id"] == question_num), None)
+    if not quiz:
+        return "Quiz not found", 404
+        
+    return render_template("question.html", quiz=quiz)
 
 if __name__ == '__main__':
   app.run(debug=True, port=5001)
