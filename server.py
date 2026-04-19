@@ -1,3 +1,6 @@
+import os
+import json
+
 from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
@@ -299,13 +302,10 @@ def lesson(lesson_id):
 def color_picker():
   return render_template("color_picker.html")
 
-quiz_data = [
-    {"id": 1, "question": "What are the primary colors?"},
-    {"id": 2, "question": "Which color is a warm color?"},
-    {"id": 3, "question": "How do you make Green?"},
-    {"id": 4, "question": "What is Complementary harmony?"},
-    {"id": 5, "question": "What does Saturation mean?"}
-]#Temp for testing
+data_path = os.path.join(app.root_path, 'data', 'quizzes.json')
+
+with open(data_path, 'r', encoding='utf-8') as f:
+    quiz_data = json.load(f)
 
 @app.route("/quiz")
 def quiz_main():

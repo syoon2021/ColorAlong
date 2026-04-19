@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "question": "What are the primary colors?",
+    "options": ["Red, Yellow, Blue", "Orange, Green, Violet"],
+    "answer": "Red, Yellow, Blue"
+  },
+  {
+    "id": 2,
+    "question": "Which color is a warm color?",
+    "options": ["Blue", "Red"],
+    "answer": "Red"
+  }
+]
