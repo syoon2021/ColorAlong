@@ -1,0 +1,149 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <h2>Question #11</h2>
+    <hr>
+    <h4>Recreate the color from memory.</h4>
+    <p class="text-muted">Use the sliders to match the color you just saw.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div id="user-color" class="border rounded" style="height: 260px;"></div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm">
+                <div class="mb-4">
+                    <label for="hue" class="form-label d-flex justify-content-between">
+                        <span>Hue</span>
+                        <span id="hue-value">180°</span>
+                    </label>
+                    <input type="range" class="form-range" id="hue" min="0" max="360" value="180">
+                </div>
+
+                <div class="mb-4">
+                    <label for="saturation" class="form-label d-flex justify-content-between">
+                        <span>Saturation</span>
+                        <span id="saturation-value">50%</span>
+                    </label>
+                    <input type="range" class="form-range" id="saturation" min="0" max="100" value="50">
+                </div>
+
+                <div class="mb-4">
+                    <label for="lightness" class="form-label d-flex justify-content-between">
+                        <span>Lightness</span>
+                        <span id="lightness-value">50%</span>
+                    </label>
+                    <input type="range" class="form-range" id="lightness" min="0" max="100" value="50">
+                </div>
+
+                <div class="alert alert-light border" id="hsl-output">
+                    hsl(180, 50%, 50%)
+                </div>
+
+                <button id="submit-color-match" class="btn btn-primary">Submit Answer</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="match-result" class="mt-4 text-center"></div>
+</div>
+
+<script>
+const targetColor = {{ target_color | tojson }};
+const previousResponse = {{ previous_response | tojson if previous_response else 'null' }};
+
+const hue = document.getElementById("hue");
+const saturation = document.getElementById("saturation");
+const lightness = document.getElementById("lightness");
+const preview = document.getElementById("user-color");
+
+const hueValue = document.getElementById("hue-value");
+const saturationValue = document.getElementById("saturation-value");
+const lightnessValue = document.getElementById("lightness-value");
+const hslOutput = document.getElementById("hsl-output");
+const submitBtn = document.getElementById("submit-color-match");
+const resultBox = document.getElementById("match-result");
+
+function updateColor() {
+    const h = hue.value;
+    const s = saturation.value;
+    const l = lightness.value;
+    const hsl = `hsl(${h}, ${s}%, ${l}%)`;
+
+    preview.style.background = hsl;
+    hueValue.textContent = `${h}°`;
+    saturationValue.textContent = `${s}%`;
+    lightnessValue.textContent = `${l}%`;
+    hslOutput.textContent = hsl;
+}
+
+function renderResult(data) {
+    resultBox.innerHTML = `
+        <h3>Match Score: ${data.match_percent}%</h3>
+        <p>${data.is_correct ? "Correct!" : "Not quite."}</p>
+        <div class="d-flex justify-content-center gap-4 mt-3">
+            <div>
+                <p>Your Color</p>
+                <div style="width:120px; height:120px; border-radius:8px; border:1px solid #ccc; background:hsl(${data.user.hue}, ${data.user.saturation}%, ${data.user.lightness}%);"></div>
+            </div>
+            <div>
+                <p>Target Color</p>
+                <div style="width:120px; height:120px; border-radius:8px; border:1px solid #ccc; background:hsl(${data.target.hue}, ${data.target.saturation}%, ${data.target.lightness}%);"></div>
+            </div>
+        </div>
+        <div class="mt-3">
+            <a href="/quiz_results" class="btn btn-success">Finish Quiz</a>
+        </div>
+    `;
+}
+
+// restore previous answer if it exists
+if (previousResponse) {
+    hue.value = previousResponse.selected_answer.hue;
+    saturation.value = previousResponse.selected_answer.saturation;
+    lightness.value = previousResponse.selected_answer.lightness;
+    updateColor();
+
+    renderResult({
+        match_percent: previousResponse.match_percent,
+        is_correct: previousResponse.is_correct,
+        user: previousResponse.selected_answer,
+        target: previousResponse.target_color
+    });
+
+    submitBtn.disabled = true;
+} else {
+    updateColor();
+
+    [hue, saturation, lightness].forEach(input => {
+        input.addEventListener("input", updateColor);
+    });
+
+    submitBtn.addEventListener("click", function () {
+        fetch("/submit_color_match", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                hue: hue.value,
+                saturation: saturation.value,
+                lightness: lightness.value,
+                target_h: targetColor.hue,
+                target_s: targetColor.saturation,
+                target_l: targetColor.lightness
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            renderResult(data);
+            submitBtn.disabled = true;
+        })
+        .catch(error => {
+            console.error("Error submitting color match:", error);
+        });
+    });
+}
+</script>
+{% endblock %}

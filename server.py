@@ -1,7 +1,8 @@
 import os
 import json
+import random
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from datetime import datetime
 
 app = Flask(__name__)
@@ -369,14 +370,102 @@ def log_color_picker():
 @app.route('/quiz_results')
 def quiz_results():
     score = sum(1 for response in user_responses.values() if response["is_correct"])
-    total = len(quiz_data)
+    total = len(quiz_data) + 1
     return render_template("quiz_result.html", score=score, total=total)
 
 @app.route('/reset_quiz', methods=['POST'])
 def reset_quiz():
-    global user_responses
+    global user_responses, color_match_target
     user_responses = {}
+    color_match_target = {}
     return jsonify({"status": "success"})
+
+color_match_target = {}
+
+@app.route('/quiz/11')
+def color_match_intro():
+    global color_match_target
+
+    if "11" in user_responses:
+        return redirect('/quiz/11/match')
+
+    if not color_match_target:
+        color_match_target = {
+            "hue": random.randint(0, 360),
+            "saturation": random.randint(25, 90),
+            "lightness": random.randint(25, 75)
+        }
+
+    return render_template("color_match_intro.html", target_color=color_match_target)
+
+@app.route('/quiz/11/match')
+def color_match_play():
+    if "11" not in user_responses and not color_match_target:
+        return redirect('/quiz/11')
+
+    previous_response = user_responses.get("11")
+
+    return render_template(
+        "color_match.html",
+        target_color=color_match_target,
+        previous_response=previous_response
+    )
+
+@app.route('/submit_color_match', methods=['POST'])
+def submit_color_match():
+    data = request.get_json()
+
+    target_h = int(data.get("target_h"))
+    target_s = int(data.get("target_s"))
+    target_l = int(data.get("target_l"))
+
+    h = int(data.get("hue"))
+    s = int(data.get("saturation"))
+    l = int(data.get("lightness"))
+
+    hue_diff = min(abs(h - target_h), 360 - abs(h - target_h))
+    sat_diff = abs(s - target_s)
+    light_diff = abs(l - target_l)
+
+    normalized_hue = hue_diff / 180
+    normalized_sat = sat_diff / 100
+    normalized_light = light_diff / 100
+
+    distance = (normalized_hue + normalized_sat + normalized_light) / 3
+    match_percent = max(0, round((1 - distance) * 100))
+
+    is_correct = match_percent >= 70
+
+    user_responses["11"] = {
+        "selected_answer": {
+            "hue": h,
+            "saturation": s,
+            "lightness": l
+        },
+        "target_color": {
+            "hue": target_h,
+            "saturation": target_s,
+            "lightness": target_l
+        },
+        "is_correct": is_correct,
+        "match_percent": match_percent,
+        "answered_at": datetime.now().isoformat(timespec="seconds")
+    }
+
+    return jsonify({
+        "match_percent": match_percent,
+        "is_correct": is_correct,
+        "target": {
+            "hue": target_h,
+            "saturation": target_s,
+            "lightness": target_l
+        },
+        "user": {
+            "hue": h,
+            "saturation": s,
+            "lightness": l
+        }
+    })
 
 if __name__ == '__main__':
   app.run(debug=True, port=5001)
