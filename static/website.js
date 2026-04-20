@@ -1,41 +1,105 @@
 document.addEventListener("DOMContentLoaded", function () {
+    setupQuizPage();
+    setupColorPickerPage();
+});
+
+function setupQuizPage() {
     const optionBtns = document.querySelectorAll(".option-btn");
-    const quizId = document.querySelector("h2").textContent.split("#")[1].trim();
-    const savedResponses = JSON.parse(localStorage.getItem('quiz_responses')) || {};
+    const heading = document.querySelector("h2");
+
+    if (!optionBtns.length || !heading || !heading.textContent.includes("#")) {
+        return;
+    }
+
+    const quizId = heading.textContent.split("#")[1].trim();
+    const savedResponses = JSON.parse(localStorage.getItem("quiz_responses")) || {};
+
     if (savedResponses[quizId]) {
-        const selectedText = savedResponses[quizId];
-        applyUI(selectedText);
+        applyQuizUI(savedResponses[quizId]);
     }
 
     optionBtns.forEach(btn => {
         btn.addEventListener("click", function () {
             const selected = this.textContent.trim();
-            
-            savedResponses[quizId] = selected;
-            localStorage.setItem('quiz_responses', JSON.stringify(savedResponses));
-
             const correctAnswer = this.getAttribute("data-answer");
-            fetch('/record_answer', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ quiz_id: quizId, is_correct: (selected === correctAnswer) })
+
+            savedResponses[quizId] = selected;
+            localStorage.setItem("quiz_responses", JSON.stringify(savedResponses));
+
+            fetch("/record_answer", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    quiz_id: quizId,
+                    selected_answer: selected,
+                    is_correct: selected === correctAnswer
+                })
             });
 
-            applyUI(selected);
+            applyQuizUI(selected);
         });
     });
 
-    function applyUI(selectedText) {
+    function applyQuizUI(selectedText) {
         optionBtns.forEach(b => {
             const correctAnswer = b.getAttribute("data-answer");
             b.disabled = true;
-            
+
             if (b.textContent.trim() === correctAnswer) {
-                b.classList.replace("btn-outline-primary", "btn-success");
+                b.classList.remove("btn-outline-primary");
+                b.classList.add("btn-success");
             }
+
             if (b.textContent.trim() === selectedText && selectedText !== correctAnswer) {
-                b.classList.replace("btn-outline-primary", "btn-danger");
+                b.classList.remove("btn-outline-primary");
+                b.classList.add("btn-danger");
             }
         });
     }
-});
+}
+
+function setupColorPickerPage() {
+    const preview = document.getElementById("color-preview");
+    const hue = document.getElementById("hue");
+    const saturation = document.getElementById("saturation");
+    const lightness = document.getElementById("lightness");
+
+    if (!preview || !hue || !saturation || !lightness) {
+        return;
+    }
+
+    const hueValue = document.getElementById("hue-value");
+    const saturationValue = document.getElementById("saturation-value");
+    const lightnessValue = document.getElementById("lightness-value");
+    const hslOutput = document.getElementById("hsl-output");
+    const presetCircles = document.querySelectorAll(".preset-circle");
+
+    function updateColor() {
+        const h = hue.value;
+        const s = saturation.value;
+        const l = lightness.value;
+
+        const hsl = `hsl(${h}, ${s}%, ${l}%)`;
+
+        preview.style.background = hsl;
+        hueValue.textContent = `${h}°`;
+        saturationValue.textContent = `${s}%`;
+        lightnessValue.textContent = `${l}%`;
+        hslOutput.textContent = hsl;
+    }
+
+    [hue, saturation, lightness].forEach(input => {
+        input.addEventListener("input", updateColor);
+    });
+
+    presetCircles.forEach(circle => {
+        circle.addEventListener("click", function () {
+            hue.value = this.dataset.h;
+            saturation.value = this.dataset.s;
+            lightness.value = this.dataset.l;
+            updateColor();
+        });
+    });
+
+    updateColor();
+}

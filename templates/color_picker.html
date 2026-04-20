@@ -1,18 +1,61 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
-
 <div class="container">
     <h1>Color Picker</h1>
+    <p class="text-muted">Move the sliders to explore how hue, saturation, and lightness affect a color.</p>
 
-    <a href="/quiz" class="btn btn-primary">
-        Take Quiz
-    </a>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div id="color-preview" class="border rounded mb-3" style="height: 260px; background: hsl(210, 60%, 50%);"></div>
 
+            <div class="d-flex gap-2 align-items-center mb-3">
+                <span class="preset-circle" data-h="0" data-s="80" data-l="55" style="background: hsl(0,80%,55%);"></span>
+                <span class="preset-circle" data-h="35" data-s="90" data-l="55" style="background: hsl(35,90%,55%);"></span>
+                <span class="preset-circle" data-h="55" data-s="90" data-l="55" style="background: hsl(55,90%,55%);"></span>
+                <span class="preset-circle" data-h="120" data-s="45" data-l="55" style="background: hsl(120,45%,55%);"></span>
+                <span class="preset-circle" data-h="210" data-s="60" data-l="50" style="background: hsl(210,60%,50%);"></span>
+                <span class="preset-circle" data-h="270" data-s="45" data-l="60" style="background: hsl(270,45%,60%);"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm">
+                <h4 class="mb-3">HSL Sliders</h4>
+
+                <div class="mb-4">
+                    <label for="hue" class="form-label d-flex justify-content-between">
+                        <span>Hue</span>
+                        <span id="hue-value">210°</span>
+                    </label>
+                    <input type="range" class="form-range" id="hue" min="0" max="360" value="210">
+                </div>
+
+                <div class="mb-4">
+                    <label for="saturation" class="form-label d-flex justify-content-between">
+                        <span>Saturation</span>
+                        <span id="saturation-value">60%</span>
+                    </label>
+                    <input type="range" class="form-range" id="saturation" min="0" max="100" value="60">
+                </div>
+
+                <div class="mb-4">
+                    <label for="lightness" class="form-label d-flex justify-content-between">
+                        <span>Lightness</span>
+                        <span id="lightness-value">50%</span>
+                    </label>
+                    <input type="range" class="form-range" id="lightness" min="0" max="100" value="50">
+                </div>
+
+                <div class="alert alert-light border" id="hsl-output">
+                    hsl(210, 60%, 50%)
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <a href="/quiz" class="btn btn-primary">Take Quiz</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-<script src="{{url_for('static', filename='website.js')}}"></script>
-
 {% endblock %}

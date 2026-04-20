@@ -56,3 +56,30 @@ section {
 }
 
 nav a { margin-right: 1rem; font-weight: 600; }
+
+#color-preview {
+  min-height: 260px;
+  background: hsl(210, 60%, 50%);
+}
+
+.preset-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px #ccc;
+}
+
+.preset-circle:hover {
+  transform: scale(1.08);
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.form-range {
+  cursor: pointer;
+}
