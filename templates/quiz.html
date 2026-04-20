@@ -1,21 +1,12 @@
 {% extends "layout.html" %}
-
 {% block content %}
-
-
 <div class="container">
-    <h1>Color Theory Quiz</h1>
-
-    <div class="list-group">
-        {% for q in quizzes %}
-            <a href="{{ url_for('question', question_num=q.id) }}" class="list-group-item list-group-item-action">
-                Question #{{ q.id }}
-            </a>
-        {% endfor %}
-    </div>
+    <h2>Quiz</h2>
+    <hr>
+    {% for q in quizzes %}
+        <a href="{{ url_for('question', question_num=q.id) }}" class="btn btn-outline-primary d-block mb-2">
+            Question {{ q.id }}: {{ q.question }}
+        </a>
+    {% endfor %}
 </div>
-
-
-<script src="{{url_for('static', filename='website.js')}}"></script>
-
 {% endblock %}

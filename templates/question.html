@@ -5,7 +5,12 @@
     <hr>
     <div class="quiz-box">
         <h4>{{ quiz.question }}</h4>
+        <div class="options mt-3">
+            {% for option in quiz.options %}
+                <button class="btn btn-outline-primary d-block w-100 mb-2 option-btn" data-answer="{{ quiz.answer }}">{{ option }}</button>
+            {% endfor %}
         </div>
+    </div>
 
     <div class="mt-4">
         <a href="{{ url_for('quiz_main') }}" class="btn btn-outline-secondary">To List of questions</a>
