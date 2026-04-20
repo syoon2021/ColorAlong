@@ -1,7 +1,35 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="container">
-    <h1>Quiz Result</h1>
-    
+<div class="container text-center">
+    <h1>Quiz Results</h1>
+    <hr>
+    <div class="result-box my-5">
+        <h3>Your Score: <span class="text-primary">{{ score }}</span> / {{ total }}</h3>
+        <p>
+            {% if score == total %}
+                Perfect! You are a color expert!
+            {% elif score >= total // 2 %}
+                Good job! You have a solid understanding.
+            {% else %}
+                Nice try! Keep learning about color theory.
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="mt-4">
+        <button onclick="resetQuiz()" class="btn btn-primary">Retake Quiz</button>
+        <a href="/" class="btn btn-outline-secondary">Go to Home</a>
+    </div>
 </div>
+
+<script>
+function resetQuiz() {
+    localStorage.removeItem('quiz_responses');
+    
+    fetch('/reset_quiz', { method: 'POST' })
+    .then(() => {
+        window.location.href = "/quiz/1";
+    });
+}
+</script>
 {% endblock %}

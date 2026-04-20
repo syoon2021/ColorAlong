@@ -319,5 +319,28 @@ def question(question_num):
         
     return render_template("question.html", quiz=quiz)
 
+user_responses = {} 
+
+@app.route('/record_answer', methods=['POST'])
+def record_answer():
+    data = request.get_json()
+    q_id = data.get('quiz_id')
+    is_correct = data.get('is_correct')
+    
+    user_responses[q_id] = is_correct
+    return jsonify({"status": "success"})
+
+@app.route('/quiz_results')
+def quiz_results():
+    score = sum(1 for correct in user_responses.values() if correct)
+    total = 10
+    return render_template("quiz_result.html", score=score, total=total)
+
+@app.route('/reset_quiz', methods=['POST'])
+def reset_quiz():
+    global user_responses
+    user_responses = {}
+    return jsonify({"status": "success"})
+
 if __name__ == '__main__':
   app.run(debug=True, port=5001)

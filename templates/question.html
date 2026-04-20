@@ -18,7 +18,7 @@
         {% if quiz.id < 10 %}
             <a href="{{ url_for('question', question_num=quiz.id + 1) }}" class="btn btn-primary">Next</a>
         {% else %}
-            <a href="/" class="btn btn-success">Finish</a>
+            <a href="{{ url_for('quiz_results') }}" class="btn btn-success">Finish</a>
         {% endif %}
     </div>
 </div>
