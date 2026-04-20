@@ -2,6 +2,7 @@ import os
 import json
 
 from flask import Flask, render_template, request, jsonify
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -275,13 +276,27 @@ lesson_info = [
   }
 ]
 
+
+
 @app.route("/")
 def welcome():
   return render_template("homepage.html")
 
+lesson_activity = []
+
 @app.route("/lesson/<int:lesson_id>")
 def lesson(lesson_id):
   lesson = next((l for l in lesson_info if l["id"] == lesson_id), None)
+
+  if not lesson:
+    return "Lesson not found", 404
+
+  lesson_activity.append({
+      "lesson_id": lesson_id,
+      "lesson_title": lesson["title"],
+      "visited_at": datetime.now().isoformat(timespec="seconds")
+  })
+
   previous_ids = [l["id"] for l in lesson_info if l["id"] < lesson_id]
   next_ids = [l["id"] for l in lesson_info if l["id"] > lesson_id]
 
@@ -327,7 +342,11 @@ def record_answer():
     q_id = data.get('quiz_id')
     is_correct = data.get('is_correct')
     
-    user_responses[q_id] = is_correct
+    user_responses[q_id] = {
+        "selected_answer": data.get("selected_answer"),
+        "is_correct": is_correct,
+        "answered_at": datetime.now().isoformat(timespec="seconds")
+    }
     return jsonify({"status": "success"})
 
 color_picker_data = {}
@@ -341,15 +360,16 @@ def log_color_picker():
     color_picker_data = {
         "hue": data.get("hue"),
         "saturation": data.get("saturation"),
-        "lightness": data.get("lightness")
+        "lightness": data.get("lightness"),
+        "logged_at": datetime.now().isoformat(timespec="seconds")
     }
 
     return jsonify({"status": "success"})
 
 @app.route('/quiz_results')
 def quiz_results():
-    score = sum(1 for correct in user_responses.values() if correct)
-    total = 10
+    score = sum(1 for response in user_responses.values() if response["is_correct"])
+    total = len(quiz_data)
     return render_template("quiz_result.html", score=score, total=total)
 
 @app.route('/reset_quiz', methods=['POST'])
