@@ -10,7 +10,7 @@
     <div class="mt-4">
         <a href="{{ url_for('quiz_main') }}" class="btn btn-outline-secondary">To List of questions</a>
         
-        {% if quiz.id < 5 %}
+        {% if quiz.id < 10 %}
             <a href="{{ url_for('question', question_num=quiz.id + 1) }}" class="btn btn-primary">Next</a>
         {% else %}
             <a href="/" class="btn btn-success">Finish</a>

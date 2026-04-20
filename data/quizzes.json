@@ -2,13 +2,61 @@
   {
     "id": 1,
     "question": "What are the primary colors?",
-    "options": ["Red, Yellow, Blue", "Orange, Green, Violet"],
+    "options": ["Red, Yellow, Blue", "Orange, Green, Violet", "Red, Green, Blue", "Cyan, Magenta, Yellow"],
     "answer": "Red, Yellow, Blue"
   },
   {
     "id": 2,
     "question": "Which color is a warm color?",
-    "options": ["Blue", "Red"],
+    "options": ["Blue", "Red", "Green", "Violet"],
     "answer": "Red"
+  },
+  {
+    "id": 3,
+    "question": "What do you get when you mix yellow and blue?",
+    "options": ["Orange", "Green", "Purple", "Brown"],
+    "answer": "Green"
+  },
+  {
+    "id": 4,
+    "question": "What is a complementary color scheme?",
+    "options": ["Colors next to each other on the wheel", "Opposite colors on the wheel", "Three evenly spaced colors", "Variations of one hue"],
+    "answer": "Opposite colors on the wheel"
+  },
+  {
+    "id": 5,
+    "question": "In HSL, what does Saturation control?",
+    "options": ["The position on the color wheel", "The brightness of the color", "The intensity/vividness of the color", "The transparency of the color"],
+    "answer": "The intensity/vividness of the color"
+  },
+  {
+    "id": 6,
+    "question": "What are secondary colors created by?",
+    "options": ["Mixing two primary colors", "Mixing a primary and secondary color", "Adding white to a primary color", "Adding black to a primary color"],
+    "answer": "Mixing two primary colors"
+  },
+  {
+    "id": 7,
+    "question": "Which harmony uses 3-4 colors next to each other on the wheel?",
+    "options": ["Complementary", "Triadic", "Analogous", "Split Complementary"],
+    "answer": "Analogous"
+  },
+  {
+    "id": 8,
+    "question": "What happens when you decrease the lightness of a color to 0?",
+    "options": ["It becomes white", "It becomes gray", "It becomes black", "It becomes more vivid"],
+    "answer": "It becomes black"
+  },
+  {
+    "id": 9,
+    "question": "Which colors are considered cool colors?",
+    "options": ["Red, Orange, Yellow", "Violet, Blue, Green", "Red, Green, Blue", "Yellow, Green, Orange"],
+    "answer": "Violet, Blue, Green"
+  },
+  {
+    "id": 10,
+    "question": "What is a monochromatic color scheme?",
+    "options": ["Using only black and white", "Different tints and shades of a single hue", "Three evenly spaced colors", "Two opposite colors"],
+    "answer": "Different tints and shades of a single hue"
   }
 ]
