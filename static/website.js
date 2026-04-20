@@ -102,4 +102,28 @@ function setupColorPickerPage() {
     });
 
     updateColor();
+
+    const goToQuizBtn = document.getElementById("go-to-quiz");
+
+    if (goToQuizBtn) {
+        goToQuizBtn.addEventListener("click", function () {
+            const h = hue.value;
+            const s = saturation.value;
+            const l = lightness.value;
+
+            fetch("/log_color_picker", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    hue: h,
+                    saturation: s,
+                    lightness: l
+                })
+            }).then(() => {
+                window.location.href = "/quiz";
+            });
+        });
+    }
 }

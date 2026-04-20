@@ -330,6 +330,22 @@ def record_answer():
     user_responses[q_id] = is_correct
     return jsonify({"status": "success"})
 
+color_picker_data = {}
+
+@app.route('/log_color_picker', methods=['POST'])
+def log_color_picker():
+    global color_picker_data
+
+    data = request.get_json()
+
+    color_picker_data = {
+        "hue": data.get("hue"),
+        "saturation": data.get("saturation"),
+        "lightness": data.get("lightness")
+    }
+
+    return jsonify({"status": "success"})
+
 @app.route('/quiz_results')
 def quiz_results():
     score = sum(1 for correct in user_responses.values() if correct)
