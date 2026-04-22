@@ -1,62 +1,107 @@
 [
   {
     "id": 1,
-    "question": "What are the primary colors?",
-    "options": ["Red, Yellow, Blue", "Orange, Green, Violet", "Red, Green, Blue", "Cyan, Magenta, Yellow"],
-    "answer": "Red, Yellow, Blue"
+    "type": "fill",
+    "question": "Label The Color Wheel",
+    "image": {
+      "src": "graphics/quiz wheel.png",
+      "alt": "labeled color wheel",
+      "class": "img-big"
+    },
+    "answers": [
+      "Yellow",
+      "Yellow-Orange",
+      "Orange",
+      "Red-Orange",
+      "Red",
+      "Red-Violet",
+      "Violet",
+      "Blue-Violet",
+      "Blue",
+      "Blue-Green",
+      "Green",
+      "Yellow-Green"
+    ]
   },
   {
     "id": 2,
+    "type": "mcq",
     "question": "Which color is a warm color?",
+    "image": {
+      "src": "graphics/color wheel basic.png",
+      "alt": "color wheel",
+      "class": "img-big"
+    },
     "options": ["Blue", "Red", "Green", "Violet"],
     "answer": "Red"
   },
   {
     "id": 3,
+    "type": "mcq",
     "question": "What do you get when you mix yellow and blue?",
+    "image": {
+      "src": "graphics/yellow blue.png",
+      "alt": "yellow + blue circles",
+      "class": "img-big"
+    },
     "options": ["Orange", "Green", "Purple", "Brown"],
     "answer": "Green"
   },
   {
     "id": 4,
-    "question": "What is a complementary color scheme?",
-    "options": ["Colors next to each other on the wheel", "Opposite colors on the wheel", "Three evenly spaced colors", "Variations of one hue"],
-    "answer": "Opposite colors on the wheel"
+    "type": "mcq",
+    "question": "What value is changing?",
+    "image": {
+      "src": "graphics/value change.png",
+      "alt": "diff green values",
+      "class": "img-big"
+    },
+    "options": ["Hue", "Saturation", "Lightness", "Tint"],
+    "answer": "Saturation"
   },
   {
     "id": 5,
-    "question": "In HSL, what does Saturation control?",
-    "options": ["The position on the color wheel", "The brightness of the color", "The intensity/vividness of the color", "The transparency of the color"],
-    "answer": "The intensity/vividness of the color"
-  },
-  {
-    "id": 6,
-    "question": "What are secondary colors created by?",
-    "options": ["Mixing two primary colors", "Mixing a primary and secondary color", "Adding white to a primary color", "Adding black to a primary color"],
-    "answer": "Mixing two primary colors"
-  },
-  {
-    "id": 7,
-    "question": "Which harmony uses 3-4 colors next to each other on the wheel?",
-    "options": ["Complementary", "Triadic", "Analogous", "Split Complementary"],
+    "type": "mcq",
+    "question": "What kind of color scheme is this?",
+    "image": {
+      "src": "graphics/quiz colors.png",
+      "alt": "cream, yellow, green colors",
+      "class": "img-big"
+    },
+    "options": ["Complementary","Analogous","Monochromatic","Triadic","Split Complementary"],
     "answer": "Analogous"
   },
   {
-    "id": 8,
+    "id": 6,
+    "type": "mcq",
     "question": "What happens when you decrease the lightness of a color to 0?",
     "options": ["It becomes white", "It becomes gray", "It becomes black", "It becomes more vivid"],
     "answer": "It becomes black"
   },
   {
-    "id": 9,
-    "question": "Which colors are considered cool colors?",
-    "options": ["Red, Orange, Yellow", "Violet, Blue, Green", "Red, Green, Blue", "Yellow, Green, Orange"],
-    "answer": "Violet, Blue, Green"
+    "id": 7,
+    "type": "dropdown",
+    "question": "Match the color harmonies",
+    "image": {
+      "src": "graphics/quiz harmonies.png",
+      "alt": "list of all quiz harmonies",
+      "class": "img-big"
+    },
+    "choices": ["Split Complementary", "Triadic", "Monochromatic", "Analogous", "Complementary"],
+    "answers": ["Complementary","Triadic","Analogous","Split Complementary","Monochromatic"]
   },
   {
-    "id": 10,
-    "question": "What is a monochromatic color scheme?",
-    "options": ["Using only black and white", "Different tints and shades of a single hue", "Three evenly spaced colors", "Two opposite colors"],
-    "answer": "Different tints and shades of a single hue"
+    "id": 8,
+    "type": "mcq",
+    "question": "What are secondary colors created by?",
+    "options": ["Mixing two primary colors", "Mixing a primary and secondary color", "Adding white to a primary color", "Adding black to a primary color"],
+    "answer": "Mixing two primary colors"
+  },
+  {
+    "id": 9,
+    "type": "mcq",
+    "question": "In HSL, what does Saturation control?",
+    "options": ["The position on the color wheel", "The brightness of the color", "The intensity/vividness of the color", "The transparency of the color"],
+    "answer": "The intensity/vividness of the color"
   }
 ]
