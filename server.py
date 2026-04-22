@@ -7,276 +7,16 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-lesson_info = [
-  {
-    "id": 1,
-    "title": "Color Wheel",
-    "sections": [
-      {
-        "type": "text",
-        "content": "The color wheel represents the full spectrum of colors, smoothly transitioning from one hue to another."
-      },
-      {
-        "type": "subsections",
-        "items": [
-          {
-            "header": "Primary Colors",
-            "text": "Red, Blue, and Yellow. They cannot be created by mixing other colors."
-          },
-          {
-            "header": "Secondary Colors",
-            "text": "Created by mixing two primary colors."
-          },
-          {
-            "header": "Tertiary Colors",
-            "text": "Created by mixing a primary and a secondary color. The name starts with the primary color followed by the secondary."
-          }
-        ]
-      },
-      {
-        "type": "image",
-        "src": "https://ourhomeworkhelp.wordpress.com/wp-content/uploads/2016/07/color-wheel-chart.png",
-        "alt": "color wheel", 
-        "class": "img-big"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "title": "Color Temperatures",
-    "sections": [
+lessons_path = os.path.join(app.root_path, 'data', 'lessons.json')
 
-      {
-        "type": "subsections",
-        "image": {
-          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Warm_and_cool_colors.svg/3840px-Warm_and_cool_colors.svg.png",
-          "alt": "warm vs cool", 
-          "class": "img-medium"
-        },
-        "items": [
-          {
-            "header": "Warm Colors",
-            "text": "On the right side of the color wheel (yellow to red-violet). They feel energetic and vibrant."
-          },
-          {
-            "header": "Cool Colors",
-            "text": "On the left side of the color wheel (violet to green). They feel calm and soothing."
-          }
-        ]
-      },
+with open(lessons_path, 'r', encoding='utf-8') as f:
+    lesson_info = json.load(f)
 
-      {
-        "type": "subsections",
-        "image": {
-          "src": "https://miro.medium.com/v2/resize:fit:1400/1*l-BQZnvfIPllP3Mv-iEAUQ.jpeg",
-          "alt": "bright vs muted",
-          "class": "img-medium"
-        },
-        "items": [
-          {
-            "header": "Vibrant / Bright",
-            "text": "Created by mixing adjacent primary colors from the same temperature (cool-cool or warm-warm)."
-          },
-          {
-            "header": "Muted",
-            "text": "Created by mixing opposite colors from different temperatures (cool-warm)."
-          }
-        ]
-      }
 
-    ]
-  },
+quizzes_path = os.path.join(app.root_path, 'data', 'quizzes.json')
 
-  {
-    "id": 3,
-    "title": "Mixing Colors",
-    "sections": [
-
-      {
-        "type": "image",
-        "src": "graphics/color wheel basic.png",
-        "alt": "color wheel mix",
-        "class": "img-medium"
-      },
-
-      {
-        "type": "image",
-        "src": "https://wileyartclass.weebly.com/uploads/2/5/8/9/25894159/785166039.png",
-        "alt": "mix colors",
-        "class": "img-medium"
-      },
-      {
-        "type": "text",
-        "content": "Colors between two hues on the color wheel are the result of mixing them. For example, yellow and blue make green, because green lies between yellow and blue.."
-      },
-
-    ]
-  },
-  {
-    "id": 4,
-    "title": "Harmonies",
-    "sections": [
-      {
-        "type": "text",
-        "content": "Color harmonies are combinations of colors that are visually pleasing. Each follows a pattern on the color wheel."
-      },
-
-      {
-        "type": "subsections",
-        "image": {
-          "src": "graphics/analgous.png",
-          "alt": "analogous diagram",
-          "class": "img-small"
-        },
-        "items": [
-          {
-            "header": "Analogous",
-            "text": "3-4 colors next to each other, creates a harmonious, relaxing combination."
-          }
-        ]
-      },
-      {
-        "type": "subsections",
-        "image": {
-          "src": "graphics/complementary.png",
-          "alt": "complementary diagram",
-          "class": "img-small"
-        },
-        "items": [
-          {
-            "header": "Complementary",
-            "text": "Opposite colors on the wheel, creates a strong contrast and vibrant, energetic effect."
-          }
-        ]
-      },
-      {
-        "type": "subsections",
-        "image": {
-          "src": "graphics/split complementary.png",
-          "alt": "split complementary diagram",
-          "class": "img-small"
-        },
-        "items": [
-          {
-            "header": "Split Complementary",
-            "text": "A base color and 2 colors adjacent to its direct complement, creates high contrast and balanced."
-          }
-        ]
-      },
-      {
-        "type": "subsections",
-        "image": {
-          "src": "graphics/triadic.png",
-          "alt": "triadic diagram",
-          "class": "img-small"
-        },
-        "items": [
-          {
-            "header": "Triadic",
-            "text": "Three colors evenly separated, creating a vibrant effect where one color is dominant and the other two are accents."
-          }
-        ]
-      },
-      {
-        "type": "subsections",
-        "image": {
-          "src": "graphics/monochromatic.png",
-          "alt": "monochromatic diagram",
-          "class": "img-small"
-        },
-        "items": [
-          {
-            "header": "Monochromatic",
-            "text": "Colors based around a single hue with different tints and shades, creates a cohesive palette."
-          }
-        ]
-      },
-    ]
-  },
-
-  {
-    "id": 5,
-    "title": "HSL: Hue, Saturation, Lightness",
-    "sections": [
-
-      {
-        "type": "subsections",
-        "image": {
-          "src": "https://blueskygraphics.co.uk/wp-content/uploads/2025/10/Colour-Wheel.png",
-          "alt": "hsl diagram",
-          "class": "img-medium"
-        },
-        "items": [
-          {
-            "header": "Hue",
-            "text": "The base color determined by its position on the color wheel. Hue is 0 is red, at 120 is green, at 240 is blue, and then ends 360 at red again."
-          },
-          {
-            "header": "Saturation",
-            "text": "The intensity of a color. The higher the saturation, the more vivid and intense the color. The lower the saturation, the more dull gray the color."
-          },
-          {
-            "header": "Lightness",
-            "text": "How bright or dark a color is, on a scale of black(0) and white(100)."
-          }
-        ]
-      }
-
-    ]
-  },
-
-  {
-    "id": 6,
-    "title": "HSL Comparison",
-    "sections": [
-      {
-        "type": "text",
-        "content": "See how changing each value affects the color."
-      },
-
-      {
-        "type": "subsections",
-        "image": {
-          "src": "graphics/dec sat.png",
-          "alt": "decreasing saturation diagram",
-          "class": "img-medium"
-        },
-        "items": [
-          {
-            "header": "Decreasing Saturation"
-          }
-        ]
-      },
-      {
-        "type": "subsections",
-        "image": {
-          "src": "graphics/dec lightness.png",
-          "alt": "decreasing lightness diagram",
-          "class": "img-medium"
-        },
-        "items": [
-          {
-            "header": "Decreasing Lightness"
-          }
-        ]
-      },
-      {
-        "type": "subsections",
-        "image": {
-          "src": "graphics/dec hue.png",
-          "alt": "decreasing hue diagram",
-          "class": "img-medium"
-        },
-        "items": [
-          {
-            "header": "Decreasing Hue"
-          }
-        ]
-      }
-    ]
-  }
-]
-
+with open(quizzes_path, 'r', encoding='utf-8') as f:
+    quiz_data = json.load(f)
 
 
 @app.route("/")
@@ -317,11 +57,6 @@ def lesson(lesson_id):
 @app.route("/color_picker")
 def color_picker():
   return render_template("color_picker.html")
-
-data_path = os.path.join(app.root_path, 'data', 'quizzes.json')
-
-with open(data_path, 'r', encoding='utf-8') as f:
-    quiz_data = json.load(f)
 
 @app.route("/quiz")
 def quiz_main():
@@ -370,7 +105,7 @@ def log_color_picker():
 @app.route('/quiz_results')
 def quiz_results():
     score = sum(1 for response in user_responses.values() if response["is_correct"])
-    total = len(quiz_data) + 1
+    total = len(quiz_data) + (1 if "10" in user_responses else 0)
     return render_template("quiz_result.html", score=score, total=total)
 
 @app.route('/reset_quiz', methods=['POST'])
@@ -382,12 +117,12 @@ def reset_quiz():
 
 color_match_target = {}
 
-@app.route('/quiz/11')
+@app.route('/quiz/10')
 def color_match_intro():
     global color_match_target
 
-    if "11" in user_responses:
-        return redirect('/quiz/11/match')
+    if "10" in user_responses:
+        return redirect('/quiz/10/match')
 
     if not color_match_target:
         color_match_target = {
@@ -398,12 +133,12 @@ def color_match_intro():
 
     return render_template("color_match_intro.html", target_color=color_match_target)
 
-@app.route('/quiz/11/match')
+@app.route('/quiz/10/match')
 def color_match_play():
-    if "11" not in user_responses and not color_match_target:
-        return redirect('/quiz/11')
+    if "10" not in user_responses and not color_match_target:
+        return redirect('/quiz/10')
 
-    previous_response = user_responses.get("11")
+    previous_response = user_responses.get("10")
 
     return render_template(
         "color_match.html",
@@ -436,7 +171,7 @@ def submit_color_match():
 
     is_correct = match_percent >= 70
 
-    user_responses["11"] = {
+    user_responses["10"] = {
         "selected_answer": {
             "hue": h,
             "saturation": s,
