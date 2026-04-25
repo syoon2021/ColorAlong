@@ -17,19 +17,9 @@
     </div>
 
     <div class="mt-4">
-        <button onclick="resetQuiz()" class="btn btn-primary">Retake Quiz</button>
+        <button id="retake-btn" class="btn btn-primary">Retake Quiz</button>
         <a href="/" class="btn btn-outline-secondary">Go to Home</a>
     </div>
 </div>
 
-<script>
-function resetQuiz() {
-    localStorage.removeItem('quiz_responses');
-    
-    fetch('/reset_quiz', { method: 'POST' })
-    .then(() => {
-        window.location.href = "/quiz/1";
-    });
-}
-</script>
 {% endblock %}

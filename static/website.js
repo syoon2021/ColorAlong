@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     setupQuizPage();
     setupColorPickerPage();
+    setupResultPage();
 });
 
 function setupQuizPage() {
@@ -274,3 +275,26 @@ function setupColorPickerPage() {
     }
 }
 
+function setupResultPage() {
+    const retakeBtn = document.getElementById("retake-btn");
+
+    if (retakeBtn) {
+        retakeBtn.addEventListener("click", function () {
+            const userConfirmed = confirm("This will reset all your quiz progress. Are you sure you want to proceed?");
+            
+            if (userConfirmed) {
+                localStorage.removeItem("quiz_responses");
+
+                fetch("/reset_quiz", {
+                    method: "POST"
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "/quiz";
+                    }
+                })
+                .catch(error => console.error("Error resetting quiz:", error));
+            }
+        });
+    }
+}
