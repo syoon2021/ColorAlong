@@ -95,16 +95,18 @@ function setupQuizPage() {
 
             fetch("/record_answer", {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     quiz_id: quizId,
                     selected_answer: userAnswers,
                     is_correct: correct
                 })
             });
+
+            applyQuizUI(savedResponses[quizId]);
         });
     }
-    
+
     // DROPDOWN 
     const dropdownBtn = document.querySelector(".submit-dropdown");
 
@@ -123,11 +125,11 @@ function setupQuizPage() {
 
             fetch("/record_answer", {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     quiz_id: quizId,
                     selected_answer: userAnswers,
-                    is_correct: true 
+                    is_correct: true
                 })
             });
 
@@ -136,6 +138,14 @@ function setupQuizPage() {
     }
 
     function applyQuizUI(saved) {
+        const feedbackBox = document.getElementById("feedback-container");
+        const feedbackText = document.getElementById("feedback-text");
+        const container = document.getElementById("quiz-container");
+
+        const correctMsg = container.getAttribute("data-correct-feedback");
+        const incorrectMsg = container.getAttribute("data-incorrect-feedback");
+
+        let isOverallCorrect = false;
         if (saved.type === "mcq") {
             optionBtns.forEach(b => {
                 const correctAnswer = b.getAttribute("data-answer");
@@ -144,6 +154,7 @@ function setupQuizPage() {
                 if (b.textContent.trim() === correctAnswer) {
                     b.classList.remove("btn-outline-primary");
                     b.classList.add("btn-success");
+                    if (saved.answer === correctAnswer) isOverallCorrect = true;
                 }
 
                 if (b.textContent.trim() === saved.answer && saved.answer !== correctAnswer) {
@@ -159,6 +170,7 @@ function setupQuizPage() {
                 document.querySelector(".submit-fill").dataset.answers
             );
 
+            isOverallCorrect = true;
             inputs.forEach((input, i) => {
                 const user = normalize(saved.answers[i]);
                 const correct = normalize(correctAnswers[i]);
@@ -168,10 +180,9 @@ function setupQuizPage() {
 
                 if (user === correct) {
                     input.classList.add("is-valid");
-                    input.classList.remove("is-invalid");
                 } else {
+                    isOverallCorrect = false;
                     input.classList.add("is-invalid");
-                    input.classList.remove("is-valid");
 
                     input.value = correctAnswers[i];
                 }
@@ -184,6 +195,7 @@ function setupQuizPage() {
                 document.querySelector(".submit-dropdown").dataset.answers
             );
 
+            isOverallCorrect = true;
             selects.forEach((sel, i) => {
                 const user = normalize(saved.answers[i]);
                 const correct = normalize(correctAnswers[i]);
@@ -193,14 +205,24 @@ function setupQuizPage() {
 
                 if (user === correct) {
                     sel.classList.add("is-valid");
-                    sel.classList.remove("is-invalid");
                 } else {
+                    isOverallCorrect = false;
                     sel.classList.add("is-invalid");
-                    sel.classList.remove("is-valid");
 
                     sel.value = correctAnswers[i];
                 }
             });
+        }
+
+        if (feedbackBox && feedbackText) {
+            feedbackBox.classList.remove("alert-success", "alert-danger");
+            if (isOverallCorrect) {
+                feedbackText.textContent = correctMsg;
+                feedbackBox.classList.add("alert-success");
+            } else {
+                feedbackText.textContent = incorrectMsg;
+                feedbackBox.classList.add("alert-danger");
+            }
         }
     }
 }
@@ -281,19 +303,19 @@ function setupResultPage() {
     if (retakeBtn) {
         retakeBtn.addEventListener("click", function () {
             const userConfirmed = confirm("This will reset all your quiz progress. Are you sure you want to proceed?");
-            
+
             if (userConfirmed) {
                 localStorage.removeItem("quiz_responses");
 
                 fetch("/reset_quiz", {
                     method: "POST"
                 })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = "/quiz";
-                    }
-                })
-                .catch(error => console.error("Error resetting quiz:", error));
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = "/quiz";
+                        }
+                    })
+                    .catch(error => console.error("Error resetting quiz:", error));
             }
         });
     }
