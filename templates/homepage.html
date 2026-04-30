@@ -1,45 +1,37 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
 <div class="container">
+  <div class="text-center mb-4">
     <h1>Welcome to ColorAlong</h1>
+    <p class="lead">
+      Learn about basic color theory concepts, explore colors with an HSL picker, and test your knowledge.
+    </p>
+  </div>
 
-    <h4>
-        Learn color theory, explore with interactive tools, and test your knowledge!
-    </h4>
+  <div class="row align-items-center">
+    <div class="col-md-5">
+      <a href="/lesson/1" class="btn btn-primary d-block mb-3">
+        <div>Start Learning</div>
+        <small>Lessons and concepts</small>
+      </a>
 
-    <img class="item_img" 
-            src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/blogs/2147738206/images/36f37de-e28-4862-1e88-5638e1c8816_Colour_Wheel_of_Tinted_Colors.png" 
-            alt="Color Wheel" 
-            width="20%" >
+      <a href="/color_picker" class="btn btn-primary d-block mb-3">
+        <div>Color Picker</div>
+        <small>HSL Slider</small>
+      </a>
 
-    <div>
-
-        <a href="/lesson/1" class="btn btn-primary">
-            Start Learning
-        </a>
-        <p class="mb-3 text-muted">
-            Learn the basics of color theory step-by-step
-        </p>
-
-        <a href="/color_picker" class="btn btn-success">
-            Color Picker
-        </a>
-        <p class="mb-3 text-muted">
-            Explore color theory with interactive tools
-        </p>
-
-        <a href="/quiz" class="btn btn-warning">
-            Take Quiz
-        </a>
-        <p class="mb-3 text-muted">
-            Test your knowledge on color theory
-        </p>
-
+      <a href="/quiz" class="btn btn-primary d-block mb-3">
+        <div>Take Quiz</div>
+        <small>Test your skills</small>
+      </a>
     </div>
+
+    <div class="col-md-7">
+      <img class="img-fluid img-big"
+           src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/blogs/2147738206/images/36f37de-e28-4862-1e88-5638e1c8816_Colour_Wheel_of_Tinted_Colors.png"
+           alt="Color Wheel">
+    </div>
+  </div>
 </div>
-
-<script src="{{ url_for('static', filename='website.js') }}"></script>
-
 {% endblock %}
