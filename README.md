@@ -8,7 +8,7 @@ GitHub repository for COMS4170 group project
 - Activate venv `.\venv\Scripts\activate`
 - Install requirements `pip install -r requirements.txt`
 
-## Setup Setup (macOS / Linux)
+## Setup (macOS / Linux)
 
 - Create venv `python3 -m venv venv`
 - Activate venv `source venv/bin/activate`
