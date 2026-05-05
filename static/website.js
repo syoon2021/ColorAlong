@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setupQuizPage();
     setupColorPickerPage();
     setupResultPage();
+    setupColorMemoryPage();
 });
 
 function setupQuizPage() {
@@ -141,6 +142,8 @@ function setupQuizPage() {
         const feedbackBox = document.getElementById("feedback-container");
         const feedbackText = document.getElementById("feedback-text");
         const container = document.getElementById("quiz-container");
+
+        if (!container) return;
 
         const correctMsg = container.getAttribute("data-correct-feedback");
         const incorrectMsg = container.getAttribute("data-incorrect-feedback");
@@ -320,3 +323,103 @@ function setupResultPage() {
         });
     }
 }
+
+function setupColorMemoryPage() {
+    const hueInput = document.getElementById("hue-match");
+    const saturationInput = document.getElementById("saturation-match");
+    const lightnessInput = document.getElementById("lightness-match");
+    const submitBtn = document.getElementById("submit-color-match");
+    
+    if (!hueInput || !submitBtn || !window.colorData?.targetColor) return;
+
+    const preview = document.getElementById("user-color");
+    const hueValue = document.getElementById("hue-value");
+    const saturationValue = document.getElementById("saturation-value");
+    const lightnessValue = document.getElementById("lightness-value");
+    const hslOutput = document.getElementById("hsl-output");
+    const resultBox = document.getElementById("match-result");
+
+    const targetColor = window.colorData.targetColor;
+    const previousResponse = window.colorData.previousResponse;
+
+    function updateColor() {
+        const h = hueInput.value;
+        const s = saturationInput.value;
+        const l = lightnessInput.value;
+        const hsl = `hsl(${h}, ${s}%, ${l}%)`;
+
+        if (preview) preview.style.background = hsl;
+        if (hueValue) hueValue.textContent = `${h}°`;
+        if (saturationValue) saturationValue.textContent = `${s}%`;
+        if (lightnessValue) lightnessValue.textContent = `${l}%`;
+        if (hslOutput) hslOutput.textContent = hsl;
+    }
+
+    function renderResult(data) {
+        if (!resultBox) return;
+        resultBox.innerHTML = `
+            <h3>Match Score: ${data.match_percent}%</h3>
+            <p>${data.is_correct ? "Correct!" : "Not quite."}</p>
+            <div class="d-flex justify-content-center gap-4 mt-3">
+                <div><p>Your Color</p><div style="width:120px; height:120px; border-radius:8px; border:1px solid #ccc; background:hsl(${data.user.hue}, ${data.user.saturation}%, ${data.user.lightness}%);"></div></div>
+                <div><p>Target Color</p><div style="width:120px; height:120px; border-radius:8px; border:1px solid #ccc; background:hsl(${data.target.hue}, ${data.target.saturation}%, ${data.target.lightness}%);"></div></div>
+            </div>
+            <div class="mt-3"><a href="/quiz_results" class="btn btn-success">Finish Quiz</a></div>
+        `;
+    }
+
+    if (previousResponse) {
+        hueInput.value = previousResponse.selected_answer.hue;
+        saturationInput.value = previousResponse.selected_answer.saturation;
+        lightnessInput.value = previousResponse.selected_answer.lightness;
+        updateColor();
+        renderResult({
+            match_percent: previousResponse.match_percent,
+            is_correct: previousResponse.is_correct,
+            user: previousResponse.selected_answer,
+            target: previousResponse.target_color
+        });
+        hueInput.disabled = true;
+        saturationInput.disabled = true;
+        lightnessInput.disabled = true;
+        submitBtn.disabled = true;
+    } else {
+        updateColor();
+        [hueInput, saturationInput, lightnessInput].forEach(input => {
+            input.addEventListener("input", updateColor);
+        });
+
+        submitBtn.addEventListener("click", function () {
+            fetch("/submit_color_match", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    hue: hueInput.value,
+                    saturation: saturationInput.value,
+                    lightness: lightnessInput.value,
+                    target_h: targetColor.hue,
+                    target_s: targetColor.saturation,
+                    target_l: targetColor.lightness
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                renderResult(data);
+                [hueInput, saturationInput, lightnessInput, submitBtn].forEach(el => el.disabled = true);
+            });
+        });
+    }
+}
+
+function setupResultPage() {
+    const retakeBtn = document.getElementById("retake-btn");
+    if (retakeBtn) {
+        retakeBtn.addEventListener("click", function () {
+            if (confirm("Reset all progress?")) {
+                localStorage.removeItem("quiz_responses");
+                fetch("/reset_quiz", { method: "POST" }).then(() => window.location.href = "/quiz");
+            }
+        });
+    }
+}
+
