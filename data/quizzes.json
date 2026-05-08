@@ -30,22 +30,6 @@
   {
     "id": 2,
     "type": "mcq",
-    "question": "Which color is a warm color?",
-    "image": {
-      "src": "graphics/color wheel basic.png",
-      "alt": "color wheel",
-      "class": "img-big"
-    },
-    "options": ["Blue", "Red", "Green", "Violet"],
-    "answer": "Red",
-    "feedback": {
-      "correct": "That’s right! Red is a classic warm color, often associated with heat and fire.",
-      "incorrect": "Not really. Think about which color reminds you of sun and warmth versus cool water or ice."
-    }
-  },
-  {
-    "id": 3,
-    "type": "mcq",
     "question": "What do you get when you mix yellow and blue?",
     "image": {
       "src": "graphics/yellow blue.png",
@@ -60,7 +44,7 @@
     }
   },
   {
-    "id": 4,
+    "id": 3,
     "type": "mcq",
     "question": "What value is changing?",
     "image": {
@@ -76,7 +60,7 @@
     }
   },
   {
-    "id": 5,
+    "id": 4,
     "type": "mcq",
     "question": "What kind of color scheme is this?",
     "image": {
@@ -92,18 +76,7 @@
     }
   },
   {
-    "id": 6,
-    "type": "mcq",
-    "question": "What happens when you decrease the lightness of a color to 0?",
-    "options": ["It becomes white", "It becomes gray", "It becomes black", "It becomes more vivid"],
-    "answer": "It becomes black",
-    "feedback": {
-      "correct": "Correct! When lightness drops to 0%, there is no light at all, resulting in pure black.",
-      "incorrect": "Think about it—if you turn off all the lights in a room, what 'color' do you see?"
-    }
-  },
-  {
-    "id": 7,
+    "id": 5,
     "type": "dropdown",
     "question": "Match the color harmonies",
     "image": {
@@ -116,28 +89,6 @@
     "feedback": {
       "correct": "Impressive! You’ve mastered the visual patterns of the five major color harmonies.",
       "incorrect": "A bit tricky, right? Try to visualize the geometric shapes (triangles, opposites) each harmony forms."
-    }
-  },
-  {
-    "id": 8,
-    "type": "mcq",
-    "question": "What are secondary colors created by?",
-    "options": ["Mixing two primary colors", "Mixing a primary and secondary color", "Adding white to a primary color", "Adding black to a primary color"],
-    "answer": "Mixing two primary colors",
-    "feedback": {
-      "correct": "Precisely! Secondary colors are the direct result of mixing two primary colors together.",
-      "incorrect": "Go back to the basics. Remember, secondary colors are the 'second' step after the three primaries."
-    }
-  },
-  {
-    "id": 9,
-    "type": "mcq",
-    "question": "In HSL, what does Saturation control?",
-    "options": ["The position on the color wheel", "The brightness of the color", "The intensity/vividness of the color", "The transparency of the color"],
-    "answer": "The intensity/vividness of the color",
-    "feedback": {
-      "correct": "Exactly! Saturation is all about the purity and vividness of a color.",
-      "incorrect": "Not quite. Lightness handles the brightness; Saturation handles how 'gray' or 'rich' the color is."
     }
   }
 ]

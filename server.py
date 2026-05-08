@@ -18,7 +18,6 @@ quizzes_path = os.path.join(app.root_path, 'data', 'quizzes.json')
 with open(quizzes_path, 'r', encoding='utf-8') as f:
     quiz_data = json.load(f)
 
-
 @app.route("/")
 def welcome():
   return render_template("homepage.html")
@@ -105,7 +104,7 @@ def log_color_picker():
 @app.route('/quiz_results')
 def quiz_results():
     score = sum(1 for response in user_responses.values() if response["is_correct"])
-    total = len(quiz_data) + (1 if "10" in user_responses else 0)
+    total = len(quiz_data) + (1 if "6" in user_responses else 0)
     return render_template("quiz_result.html", score=score, total=total)
 
 @app.route('/reset_quiz', methods=['POST'])
@@ -117,12 +116,12 @@ def reset_quiz():
 
 color_match_target = {}
 
-@app.route('/quiz/10')
+@app.route('/quiz/6')
 def color_match_intro():
     global color_match_target
 
-    if "10" in user_responses:
-        return redirect('/quiz/10/match')
+    if "6" in user_responses:
+        return redirect('/quiz/6/match')
 
     if not color_match_target:
         color_match_target = {
@@ -133,12 +132,12 @@ def color_match_intro():
 
     return render_template("color_match_intro.html", target_color=color_match_target)
 
-@app.route('/quiz/10/match')
+@app.route('/quiz/6/match')
 def color_match_play():
-    if "10" not in user_responses and not color_match_target:
-        return redirect('/quiz/10')
+    if "6" not in user_responses and not color_match_target:
+        return redirect('/quiz/6')
 
-    previous_response = user_responses.get("10")
+    previous_response = user_responses.get("6")
 
     return render_template(
         "color_match.html",
@@ -171,7 +170,7 @@ def submit_color_match():
 
     is_correct = match_percent >= 70
 
-    user_responses["10"] = {
+    user_responses["6"] = {
         "selected_answer": {
             "hue": h,
             "saturation": s,
