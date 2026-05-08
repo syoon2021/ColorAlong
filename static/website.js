@@ -60,10 +60,16 @@ function setupQuizPage() {
     if (fillBtn) {
         fillBtn.addEventListener("click", () => {
             const inputs = document.querySelectorAll(".fill-input");
+
+            for (let input of inputs) {
+                if (input.value.trim() === "") {
+                    alert("Please fill in all blanks before submitting.");
+                    return;
+                }
+            }
+
             const answers = JSON.parse(fillBtn.dataset.answers);
-
             const userAnswers = Array.from(inputs).map(input => input.value.trim());
-
             let correct = true;
 
             inputs.forEach((input, i) => {
@@ -114,6 +120,13 @@ function setupQuizPage() {
     if (dropdownBtn) {
         dropdownBtn.addEventListener("click", () => {
             const selects = document.querySelectorAll(".dropdown-input");
+            
+            for (let sel of selects) {
+                if (sel.value === "" || sel.value === null) {
+                    alert("Please select an answer for all dropdowns before submitting.");
+                    return;
+                }
+            }
 
             const userAnswers = Array.from(selects).map(sel => sel.value);
 

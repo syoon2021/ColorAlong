@@ -21,32 +21,44 @@
         alt="{{ img.alt }}"
         class="img-fluid {{ img.class if img.class else '' }}">
 
-    {% elif section.type == "subsections" %}
+  {% elif section.type == "subsections" %}
+
+  <div class="row align-items-center mb-5">
 
     {% if section.get("image") %}
       {% set img = section["image"] %}
-        <img src="{% if img.src.startswith('http') %}
-                    {{ img.src }}
-                  {% else %}
-                    {{ url_for('static', filename=img.src) }}
-                  {% endif %}"
-        alt="{{ img.alt }}"
-        class="img-fluid {{ img.class if img.class else '' }}">
+      <div class="col-md-5 text-center">
+        <img 
+          src="{% if img.src.startswith('http') %}
+                {{ img.src }}
+              {% else %}
+                {{ url_for('static', filename=img.src) }}
+              {% endif %}"
+          alt="{{ img.alt }}"
+          class="img-fluid {{ img.class if img.class else '' }}"
+        >
+      </div>
     {% endif %}
 
-    {% for item in section["items"] %}
-      <div class="mb-3">
+    <div class="col-md-7">
 
-        {% if item.get("header") %}
-          <h5>{{ item["header"] }}</h5>
-        {% endif %}
+      {% for item in section["items"] %}
+        <div class="mb-3">
 
-        {% if item.get("text") %}
-          <p>{{ item["text"] }}</p>
-        {% endif %}
+          {% if item.get("header") %}
+            <h5>{{ item["header"] }}</h5>
+          {% endif %}
 
-      </div>
-    {% endfor %}
+          {% if item.get("text") %}
+            <p>{{ item["text"] }}</p>
+          {% endif %}
+
+        </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
 
   {% endif %}
 

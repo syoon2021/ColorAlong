@@ -139,8 +139,12 @@ img {
   max-width: 190px;
 }
 
+.img-submed {
+  width: 90%;
+}
+
 .img-medium {
-  max-width: 420px;
+  max-width: 380px;
 }
 
 .img-big {

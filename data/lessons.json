@@ -9,6 +9,11 @@
       },
       {
         "type": "subsections",
+        "image": {
+          "src": "https://ourhomeworkhelp.wordpress.com/wp-content/uploads/2016/07/color-wheel-chart.png",
+          "alt": "color wheel", 
+          "class": "img-big"
+        },
         "items": [
           {
             "header": "Primary Colors",
@@ -23,12 +28,6 @@
             "text": "Created by mixing a primary and a secondary color. The name starts with the primary color followed by the secondary."
           }
         ]
-      },
-      {
-        "type": "image",
-        "src": "https://ourhomeworkhelp.wordpress.com/wp-content/uploads/2016/07/color-wheel-chart.png",
-        "alt": "color wheel", 
-        "class": "img-big"
       }
     ]
   },
@@ -42,7 +41,7 @@
         "image": {
           "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Warm_and_cool_colors.svg/3840px-Warm_and_cool_colors.svg.png",
           "alt": "warm vs cool", 
-          "class": "img-medium"
+          "class": "img-submed"
         },
         "items": [
           {
@@ -61,7 +60,7 @@
         "image": {
           "src": "https://miro.medium.com/v2/resize:fit:1400/1*l-BQZnvfIPllP3Mv-iEAUQ.jpeg",
           "alt": "bright vs muted",
-          "class": "img-medium"
+          "class": "img-submed"
         },
         "items": [
           {
@@ -82,12 +81,18 @@
     "id": 3,
     "title": "Mixing Colors",
     "sections": [
-
       {
-        "type": "image",
-        "src": "graphics/color wheel basic.png",
-        "alt": "color wheel mix",
-        "class": "img-medium"
+        "type": "subsections",
+        "image": {
+          "src": "graphics/color wheel basic.png",
+          "alt": "color wheel mix",
+          "class": "img-submed"
+        },
+        "items": [
+          {
+            "text": "When two colors are mixed, they combine to create a new color that contains characteristics of both. On the color wheel, this new color usually appears between the two original hues. For example, mixing yellow and blue produces green because green is the result of combining those two color properties."
+          }
+        ]
       },
 
       {
@@ -95,12 +100,7 @@
         "src": "https://wileyartclass.weebly.com/uploads/2/5/8/9/25894159/785166039.png",
         "alt": "mix colors",
         "class": "img-medium"
-      },
-      {
-        "type": "text",
-        "content": "Colors between two hues on the color wheel are the result of mixing them. For example, yellow and blue make green, because green lies between yellow and blue.."
       }
-
     ]
   },
   {
@@ -195,7 +195,7 @@
         "image": {
           "src": "https://blueskygraphics.co.uk/wp-content/uploads/2025/10/Colour-Wheel.png",
           "alt": "hsl diagram",
-          "class": "img-medium"
+          "class": "img-submed"
         },
         "items": [
           {

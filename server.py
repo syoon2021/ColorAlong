@@ -16,7 +16,7 @@ with open(lessons_path, 'r', encoding='utf-8') as f:
 quizzes_path = os.path.join(app.root_path, 'data', 'quizzes.json')
 
 with open(quizzes_path, 'r', encoding='utf-8') as f:
-    quiz_data = json.load(f)
+    quiz_data = json.load(f) 
 
 @app.route("/")
 def welcome():
