@@ -10,7 +10,7 @@
       {
         "type": "subsections",
         "image": {
-          "src": "https://ourhomeworkhelp.wordpress.com/wp-content/uploads/2016/07/color-wheel-chart.png",
+          "src": "graphics/labeled color wheel.png",
           "alt": "color wheel", 
           "class": "img-big"
         },
@@ -25,7 +25,7 @@
           },
           {
             "header": "Tertiary Colors",
-            "text": "Created by mixing a primary and a secondary color. The name starts with the primary color followed by the secondary."
+            "text": "Created by mixing a primary and a secondary color. The name starts with the primary color followed by the secondary. For example, Blue and Violet creates Blue Violet, not Violet Blue."
           }
         ]
       }
@@ -46,11 +46,11 @@
         "items": [
           {
             "header": "Warm Colors",
-            "text": "On the right side of the color wheel (yellow to red-violet). They feel energetic and vibrant."
+            "text": "On the right side of the color wheel. They feel energetic and vibrant."
           },
           {
             "header": "Cool Colors",
-            "text": "On the left side of the color wheel (violet to green). They feel calm and soothing."
+            "text": "On the left side of the color wheel. They feel calm and soothing."
           }
         ]
       },
@@ -193,7 +193,7 @@
       {
         "type": "subsections",
         "image": {
-          "src": "https://blueskygraphics.co.uk/wp-content/uploads/2025/10/Colour-Wheel.png",
+          "src": "https://giggster.com/guide/static/fed42130c194b0c240a4ec10408adf97/8282f/hsl-cover-2.png",
           "alt": "hsl diagram",
           "class": "img-submed"
         },

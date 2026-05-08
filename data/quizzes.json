@@ -10,17 +10,17 @@
     },
     "answers": [
       "Yellow",
-      "Yellow-Orange",
+      "Yellow Orange",
       "Orange",
-      "Red-Orange",
+      "Red Orange",
       "Red",
-      "Red-Violet",
+      "Red Violet",
       "Violet",
-      "Blue-Violet",
+      "Blue Violet",
       "Blue",
-      "Blue-Green",
+      "Blue Green",
       "Green",
-      "Yellow-Green"
+      "Yellow Green"
     ],
     "feedback": {
       "correct": "Perfect! You have a great grasp of the 12 colors and their specific positions on the wheel.",
@@ -30,17 +30,17 @@
   {
     "id": 2,
     "type": "mcq",
-    "question": "What do you get when you mix yellow and blue?",
+    "question": "Which colors are considered cool colors?",
     "image": {
-      "src": "graphics/yellow blue.png",
-      "alt": "yellow + blue circles",
-      "class": "img-big"
+    "src": "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/blogs/2147738206/images/36f37de-e28-4862-1e88-5638e1c8816_Colour_Wheel_of_Tinted_Colors.png",
+    "alt": "diff green values",
+    "class": "img-med"
     },
-    "options": ["Orange", "Green", "Purple", "Brown"],
-    "answer": "Green",
+    "options": ["Red, Orange, Yellow", "Violet, Blue, Green", "Red, Green, Blue", "Yellow, Green, Orange"],
+    "answer": "Violet, Blue, Green",
     "feedback": {
-      "correct": "Spot on! Combining yellow and blue creates green, a fundamental secondary color.",
-      "incorrect": "Think again. Remember your primary color mixing—purple comes from red and blue!"
+      "correct": "Correct! Cool colors include violet, blue, and green, and they tend to feel calm and soothing.",
+      "incorrect": "Not quite. Cool colors are typically found on the blue side of the color wheel, including violet, blue, and green."
     }
   },
   {
