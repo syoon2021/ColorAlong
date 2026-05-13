@@ -13,3 +13,11 @@ GitHub repository for COMS4170 group project
 - Create venv `python3 -m venv venv`
 - Activate venv `source venv/bin/activate`
 - Install requirements `pip install -r requirements.txt`
+
+## Team Members
+
+- April Li (akitiss)
+- Junseob Kim (JK-CU)
+- Seojin Yoon (syoon2021)
+- Ethan Yang (y8ngspider)
+
